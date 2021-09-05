@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @NotNull
+    @NotNull(message = "{hoaify.constraints.username.NotNull.messages}")
     @Size(min = 4, max = 255)
     private String username;
 
@@ -28,7 +28,7 @@ public class User {
 
     @NotNull
     @Size(min = 8, max = 255)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{hoaify.constraint.password.Pattern.messages}")
     private String password;
 
 }
