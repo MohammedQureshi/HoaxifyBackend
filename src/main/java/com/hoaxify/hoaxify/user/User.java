@@ -3,9 +3,7 @@ package com.hoaxify.hoaxify.user;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -20,6 +18,7 @@ public class User {
 
     @NotNull(message = "{hoaify.constraints.username.NotNull.messages}")
     @Size(min = 4, max = 255)
+    @UniqueUsername
     private String username;
 
     @NotNull
