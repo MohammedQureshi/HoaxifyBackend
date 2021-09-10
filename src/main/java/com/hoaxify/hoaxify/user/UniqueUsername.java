@@ -15,5 +15,5 @@ public @interface UniqueUsername {
 
     String message() default "{hoaxify.constraints.username.UniqueUsername.message}";
     Class<?>[] groups() default { };
-    Class<? extends Payload>[] payloads() default{ };
+    Class<? extends Payload>[] payload() default{ };
 }
