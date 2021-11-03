@@ -20,6 +20,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/api/1.0/users")
+    public String index() {
+        return "This is Home page";
+    }
+
     @PostMapping("/api/1.0/users")
     GenericResponse createUser(@Valid @RequestBody User user){
         userService.save(user);
