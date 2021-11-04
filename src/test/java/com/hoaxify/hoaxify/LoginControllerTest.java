@@ -1,5 +1,6 @@
 package com.hoaxify.hoaxify;
 
+import com.hoaxify.hoaxify.error.ApiError;
 import com.hoaxify.hoaxify.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,25 @@ public class LoginControllerTest {
         authenticate();
         ResponseEntity<Object> response = login(Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    public void postLogin_withoutUserCredentials_reciveApiError(){
+        ResponseEntity<ApiError> response = login(ApiError.class);
+        assertThat(response.getBody().getUrl()).isEqualTo(API_1_0_Login);
+    }
+
+    @Test
+    public void postLogin_withoutUserCredentials_reciveApiErrorWithoutValidationErrors(){
+        ResponseEntity<String> response = login(String.class);
+        assertThat(response.getBody().contains("validationErrors")).isFalse();
+    }
+
+    @Test
+    public void postLogin_withIncorrectCredentials_reciveUnauthorizeWithoutWWWAuthenticationHeader(){
+        authenticate();
+        ResponseEntity<Object> response = login(Object.class);
+        assertThat(response.getHeaders().containsKey("WWW-Authenticate")).isFalse();
     }
 
     private void authenticate() {
