@@ -93,7 +93,45 @@ public class LoginControllerTest {
         Map<String, Object> body = response.getBody();
         Integer id = (Integer) body.get("id");
         assertThat(id).isEqualTo(inDb.getId());
+    }
 
+    @Test
+    public void postLogin_withValidCredenticals_recieveLoggedInUsersImage(){
+        User inDb = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> body = response.getBody();
+        String image = (String) body.get("image");
+        assertThat(image).isEqualTo(inDb.getImage());
+    }
+
+    @Test
+    public void postLogin_withValidCredenticals_recieveLoggedInUsersDisplayName(){
+        User inDb = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> body = response.getBody();
+        String displayName = (String) body.get("displayName");
+        assertThat(displayName).isEqualTo(inDb.getDisplayName());
+    }
+
+    @Test
+    public void postLogin_withValidCredenticals_recieveLoggedInUsersUsername(){
+        User inDb = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> body = response.getBody();
+        String username = (String) body.get("username");
+        assertThat(username).isEqualTo(inDb.getUsername());
+    }
+
+    @Test
+    public void postLogin_withValidCredenticals_notrecieveLoggedInUsersPassword(){
+        User inDb = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> body = response.getBody();
+        assertThat(body.containsKey("password")).isFalse();
     }
 
     private void authenticate() {
